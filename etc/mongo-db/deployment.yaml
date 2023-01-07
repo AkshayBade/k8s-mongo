@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # name of deployment
+  name: i-mongodb-deployment
+  labels:
+    app: i-mongodb
+#pod creation specifications / blueprint
+spec:
+  # How many pods I want in my cluster
+  replicas: 1
+  # How does kubectl refer these pods
+  selector:
+    matchLabels:
+      app: i-mongodb
+  # Actual blueprint of POD
+  template:
+    metadata:
+      labels:
+        app: i-mongodb
+    # container creation specs
+    spec:
+      containers:
+      - name: i-mongodb
+        # docker image from local or docker repo.
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: i-mongodb-secret
+              key: mongo-root-username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: i-mongodb-secret
+              key: mongo-root-password
+---
