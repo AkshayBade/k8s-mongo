@@ -1,0 +1,16 @@
+---
+---
+# PLAN
+- [ ]  Sample Project
+    - [ ]  Setup Mongo DB Pod
+        - [ ]  Create Deployment config
+        - [ ]  Create Secrets config
+        - [ ]  Create Volume config
+        - [ ]  Create Service config
+    - [ ]  Setup Mongo express Pod
+        - [ ]  Create Deployment config
+        - [ ]  Create ConfigMap config
+        - [ ]  Create Service config
+        - [ ]  Create ingress config
+    - [ ]  Deploy using minikube setup
+    - [ ]  Try some operations
