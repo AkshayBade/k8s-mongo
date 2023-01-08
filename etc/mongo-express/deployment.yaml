@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: i-mongoui
+  labels:
+    app: i-mongoui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: i-mongoui
+  template:
+    metadata:
+      labels:
+        app: i-mongoui
+    spec:
+      containers:
+        - name: i-mongoui
+          image: mongo-express
+          ports:
+            - containerPort: 8081
+          env:
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: i-mongodb-secret
+                  key: mongo-root-username
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: i-mongodb-secret
+                  key: mongo-root-password
+            - name: ME_CONFIG_MONGODB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: i-mongodb-configmap
+                  key: mongodb-url
